@@ -1,0 +1,48 @@
+<div class="container">
+  <button class="btn-volver" (click)="volver()">← Volver a Noticias</button>
+
+  <div *ngIf="cargando" class="loading">
+    Cargando noticia...
+  </div>
+
+  <div *ngIf="error" class="error">
+    {{ error }}
+  </div>
+
+  <article *ngIf="noticia && !cargando" class="noticia-detalle">
+    <div class="noticia-header">
+      <img [src]="noticia.imagen" [alt]="noticia.titulo" class="noticia-imagen-grande" />
+      <div class="noticia-meta">
+        <span class="estado" [class]="'estado-' + noticia.estado_publicacion">
+          {{ noticia.estado_publicacion }}
+        </span>
+        <span class="fecha">{{ noticia.fecha_publicacion | date:'long' }}</span>
+      </div>
+    </div>
+
+    <div class="noticia-contenido">
+      <h1>{{ noticia.titulo }}</h1>
+      
+      <div class="noticia-stats">
+        <span>👁️ {{ noticia.visitas }} visitas</span>
+        <span>💬 {{ noticia.comentarios_count }} comentarios</span>
+      </div>
+
+      <div class="noticia-descripcion">
+        <p>{{ noticia.descripcion }}</p>
+      </div>
+
+      <div class="noticia-info" *ngIf="noticia.categoria || noticia.estado || noticia.usuario">
+        <div *ngIf="noticia.categoria" class="info-item">
+          <strong>Categoría:</strong> {{ noticia.categoria.nombre }}
+        </div>
+        <div *ngIf="noticia.estado" class="info-item">
+          <strong>Estado:</strong> {{ noticia.estado.nombre }}
+        </div>
+        <div *ngIf="noticia.usuario" class="info-item">
+          <strong>Autor:</strong> {{ noticia.usuario.nombre }} {{ noticia.usuario.apellidos }}
+        </div>
+      </div>
+    </div>
+  </article>
+</div>

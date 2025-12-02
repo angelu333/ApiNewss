@@ -1,0 +1,16 @@
+<h2>Lista de Estados</h2>
+<ul>
+  @for (estado of estados; track estado.id) {
+    <li>
+      {{ estado.nombre }} ({{ estado.abreviacion }}) {{ estado.UserAlta }} - {{ estado.id }}
+    </li>
+  } @empty {
+    <li>No hay estados disponibles.</li>
+  }
+</ul>
+
+<button (click)="crearNuevoEstado()" class="boton"> CREA UN NUEVO ESTADO </button>
+<br><br>
+<button (click)="actualizarEstado()" class="boton"> ACTUALIZAR ESTADO YUCATÁN </button>
+<br><br>
+<button (click)="eliminarEstado()" class="boton-rojo"> ELIMINAR SONORA </button>

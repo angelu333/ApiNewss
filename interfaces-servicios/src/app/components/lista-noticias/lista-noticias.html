@@ -1,0 +1,61 @@
+<div class="container">
+  <h2>Lista de Noticias</h2>
+
+  <div class="filtros" *ngIf="!cargando">
+    <div class="filtro-grupo">
+      <label for="categoria">Categoría:</label>
+      <select id="categoria" [(ngModel)]="categoriaSeleccionada" (change)="filtrarNoticias()">
+        <option value="">Todas las categorías</option>
+        <option *ngFor="let categoria of categorias" [value]="categoria.id">
+          {{ categoria.nombre }}
+        </option>
+      </select>
+    </div>
+
+    <div class="filtro-grupo">
+      <label for="estado">Estado:</label>
+      <select id="estado" [(ngModel)]="estadoSeleccionado" (change)="filtrarNoticias()">
+        <option value="">Todos los estados</option>
+        <option *ngFor="let estado of estados" [value]="estado.id">
+          {{ estado.nombre }}
+        </option>
+      </select>
+    </div>
+
+    <button class="btn-limpiar" (click)="limpiarFiltros()">Limpiar filtros</button>
+  </div>
+
+  <div *ngIf="cargando" class="loading">
+    Cargando noticias...
+  </div>
+
+  <div *ngIf="error" class="error">
+    {{ error }}
+  </div>
+
+  <div class="noticias-grid" *ngIf="!cargando && !error">
+    <div *ngFor="let noticia of noticiasFiltradas" class="noticia-card" (click)="verDetalle(noticia.id)">
+      <div class="noticia-imagen" *ngIf="noticia.imagen">
+        <img [src]="noticia.imagen" [alt]="noticia.titulo" />
+      </div>
+      <div class="noticia-contenido">
+        <h3>{{ noticia.titulo }}</h3>
+        <p class="descripcion">{{ noticia.descripcion }}</p>
+        <div class="noticia-meta">
+          <span class="fecha">{{ noticia.fecha_publicacion | date:'short' }}</span>
+          <span class="estado" [class]="'estado-' + noticia.estado_publicacion">
+            {{ noticia.estado_publicacion }}
+          </span>
+        </div>
+        <div class="noticia-stats">
+          <span>👁️ {{ noticia.visitas }} visitas</span>
+          <span>💬 {{ noticia.comentarios_count }} comentarios</span>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="noticiasFiltradas.length === 0" class="no-noticias">
+      <p>No hay noticias que coincidan con los filtros seleccionados.</p>
+    </div>
+  </div>
+</div>

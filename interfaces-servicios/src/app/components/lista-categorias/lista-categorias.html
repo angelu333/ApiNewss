@@ -1,0 +1,26 @@
+<div class="container">
+  <h2>Categorías de Noticias</h2>
+  
+  <div *ngIf="cargando" class="loading">
+    <p>Cargando categorías...</p>
+  </div>
+
+  <div *ngIf="!cargando && categorias.length === 0" class="empty">
+    <p>No hay categorías disponibles</p>
+  </div>
+
+  <div *ngIf="!cargando && categorias.length > 0" class="categorias-grid">
+    <div *ngFor="let categoria of categorias" class="categoria-card">
+      <div class="categoria-header">
+        <h3>{{ categoria.nombre }}</h3>
+        <span class="badge" [class.activo]="categoria.activo" [class.inactivo]="!categoria.activo">
+          {{ categoria.activo ? 'Activo' : 'Inactivo' }}
+        </span>
+      </div>
+      <p class="descripcion">{{ categoria.descripcion }}</p>
+      <div class="categoria-footer">
+        <small>Creado: {{ categoria.FechaAlta | date:'short' }}</small>
+      </div>
+    </div>
+  </div>
+</div>
